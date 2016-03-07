@@ -91,7 +91,20 @@ app.post('/store', function(req, res) {
 
                     spotifyApi.addTracksToPlaylist(spUserName, process.env.SPOTIFY_PLAYLIST_ID, ['spotify:track:' + track.id])
                         .then(function(data) {
-                            return res.send('Track added: *' + track.name + '* by *' + track.artists[0].name + '*');
+
+                            res.setHeader('Content-Type', 'application/json');
+                            return res.send(JSON.stringify({
+                                "response_type": "in_channel",
+                                "text": 'Track added: *' + track.name + '* by *' + track.artists[0].name + ' added to minimalism playlist',
+                                "attachments": [
+                                    {
+                                        "image_url":track.album.images[0].url
+                                    }
+                                ],
+                                "unfurl_media":true,
+                                "unfurl_links":true
+                            }, null, 3));
+
                         }, function(err) {
                             return res.send(err.message);
                         });
