@@ -83,13 +83,11 @@ app.post('/store', function(req, res) {
                     var track = results[0];
 
                     // Sort out who posted that track
-
                     var userName = req.body.user_name;
                     var spUserName = "marcus_klein"; // default
-                    if (spUserName.indexOf("kate") > -1) {
+                    if (userName.indexOf("kate") > -1) {
                         spUserName = "kate_elise_wanless";
                     }
-
 
                     spotifyApi.addTracksToPlaylist(spUserName, process.env.SPOTIFY_PLAYLIST_ID, ['spotify:track:' + track.id])
                         .then(function(data) {
