@@ -7,10 +7,8 @@ var bodyParser    = require('body-parser');
 var request       = require('request');
 var dotenv        = require('dotenv');
 var SpotifyWebApi = require('spotify-web-api-node');
-var https         = require('https');
-var fs            = require('fs');
 
-dotenv.load();
+//dotenv.load();
 
 var spotifyApi = new SpotifyWebApi({
     clientId     : process.env.SPOTIFY_KEY,
@@ -98,12 +96,5 @@ app.post('/store', function(req, res) {
 });
 
 
-var secureServer = https.createServer({
-    key: fs.readFileSync('./ssl/server.key'),
-    cert: fs.readFileSync('./ssl/server.crt'),
-    ca: fs.readFileSync('./ssl/ca.crt'),
-    requestCert: true,
-    rejectUnauthorized: false
-}, app).listen(process.env.PORT || 3000, function() {
-    console.log("Secure Express server listening on port " + process.env.PORT || 5000);
-});
+app.set('port', (process.env.PORT || 3000));
+app.listen(app.get('port'));
