@@ -95,10 +95,10 @@ app.post('/store', function(req, res) {
                             res.setHeader('Content-Type', 'application/json');
                             return res.send(JSON.stringify({
                                 "response_type": "in_channel",
-                                "text": 'Track added: *' + track.name + '* by *' + track.artists[0].name + '* added to minimalism playlist with ' + track.album.images[0].url,
+                                "text": 'Track added: *' + track.name + '* by *' + track.artists[0].name + '* added to minimalism playlist \n' + track.album.images[1].url,
                                 "attachments": [
                                     {
-                                        "image_url":track.album.images[0].url
+                                        "image_url":track.album.images[1].url
                                     }
                                 ],
                                 "unfurl_media":true,
