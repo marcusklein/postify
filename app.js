@@ -81,7 +81,17 @@ app.post('/store', function(req, res) {
                         return res.send('Could not find that track.');
                     }
                     var track = results[0];
-                    spotifyApi.addTracksToPlaylist(process.env.SPOTIFY_USERNAME, process.env.SPOTIFY_PLAYLIST_ID, ['spotify:track:' + track.id])
+
+                    // Sort out who posted that track
+
+                    var userName = req.body.user_name;
+                    var spUserName = "marcus_klein"; // default
+                    if (spUserName.indexOf("kate") > -1) {
+                        spUserName = "kate_elise_wanless";
+                    }
+
+
+                    spotifyApi.addTracksToPlaylist(spUserName, process.env.SPOTIFY_PLAYLIST_ID, ['spotify:track:' + track.id])
                         .then(function(data) {
                             return res.send('Track added: *' + track.name + '* by *' + track.artists[0].name + '*');
                         }, function(err) {
